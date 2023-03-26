@@ -1,0 +1,9 @@
+version: '3'
+services:
+  register-auelect:
+    image: bill-manager-register
+    container_name: bill-manager-register-auelect
+    command: 
+    - "auelect"
+    volumes:
+    - ../data/:/data/
