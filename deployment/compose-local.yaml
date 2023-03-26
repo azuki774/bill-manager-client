@@ -1,0 +1,11 @@
+version: '3'
+services:
+  register-auelect:
+    image: bill-manager-register
+    container_name: bill-manager-register-auelect
+    command: 
+    - "auelect"
+    environment:
+    - DB_HOST=192.168.1.21 # Change according to your environment
+    volumes:
+    - ../data/:/data/
