@@ -2,6 +2,11 @@ from pythonjsonlogger import jsonlogger
 import logging
 import glob
 from bs4 import BeautifulSoup
+import datetime
+
+t_delta = datetime.timedelta(hours=9)
+JST = datetime.timezone(t_delta, "JST")
+now = datetime.datetime.now(JST)
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -35,13 +40,7 @@ def _extract_html(f):
             consume_text.split(" ")[0],
             price_text.split(" ")[-2],
         ]
-        print(day)
-        print("---------------")
-        print(consume)
-        print("---------------")
-        print(price)
-        print("===============")
-        ret.append([day, consume, price])
+        ret.append([day, consume, price])  # # ex. [11, 8.50, 111]
 
     logger.info("extract html data complete: %s", f)
     return ret
@@ -50,6 +49,8 @@ def _extract_html(f):
 def _proc_file(file):
     logger.info("proc file: %s", file)
     _extract_html(file)
+
+    yyyymm = now.strftime("%Y%m")
     return 0
 
 
