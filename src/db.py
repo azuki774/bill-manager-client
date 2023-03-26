@@ -40,11 +40,10 @@ def insert_auelect(data, yyyymm):
     )
 
     for d in data:
-        print(d)
         sql = add_data.format('"' + yyyymm + d[0] + '"', int(float(d[1]) * 1000), 0, 0)
-        print(sql)
         cursor.execute(sql)
 
     cnx.commit()
     cursor.close()
+    logger.info("insert commited")
     cnx.close()
