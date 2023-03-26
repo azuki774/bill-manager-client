@@ -3,6 +3,7 @@ import logging
 import glob
 from bs4 import BeautifulSoup
 import datetime
+import os
 import db
 
 t_delta = datetime.timedelta(hours=9)
@@ -56,6 +57,16 @@ def _proc_file(file):
     return 0
 
 
+def _proc_rename(file):
+    """
+    処理後のファイルをリネームする
+    ex. test.html -> _test.html
+    """
+    filedir = os.path.dirname(file)
+    filename = os.path.basename(file)
+    os.rename(file, filedir + "/_" + filename)
+
+
 def auelect_main():
     """
     auelect コマンドの main
@@ -65,9 +76,10 @@ def auelect_main():
 
     files = glob.glob("/data/*")
     for f in files:
-        if f[0] == "_":  # prefix が _ のファイルは処理済と見なす
+        if os.path.basename(f)[0] == "_":  # prefix が _ のファイルは処理済と見なす
             continue
         _proc_file(f)
+        _proc_rename(f)
 
     logger.info("auelect end")
     return 0
