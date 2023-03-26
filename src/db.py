@@ -34,7 +34,7 @@ def insert_auelect(data, yyyymm):
     cnx = _connect_db()
     cursor = cnx.cursor()
     add_data = (
-        "INSERT INTO elect_consumption"
+        "INSERT IGNORE INTO elect_consumption"
         "(record_date, total_consumption, day_consumption, night_consumption) "
         "VALUES ({}, {}, {}, {})"
     )
