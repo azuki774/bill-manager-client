@@ -1,0 +1,33 @@
+name: e2e
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Test DB
+        run: docker run -d --name mariadb -p 3306:3306 -e "MYSQL_DATABASE=billmanager" -e "MYSQL_ROOT_PASSWORD=password" mariadb:10.9
+
+      - name: pip upgrade
+        run: python -m pip install --upgrade pip
+
+      - name: pip install
+        run: pip install -r requirement.txt
+
+      - name: migrate DB
+        run: mysql -h 127.0.0.1 -u root -ppassword < test/setup.sql
+
+      - name: set data
+        run: mkdir -p /data && sudo mv test/* /data/
+
+      - name: run auelect
+        run: python3 -u src/main.py auelect
