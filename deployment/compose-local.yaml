@@ -8,4 +8,4 @@ services:
     environment:
     - DB_HOST=192.168.1.21 # Change according to your environment
     volumes:
-    - ../data/:/data/
+    - ../data/:/var/data/

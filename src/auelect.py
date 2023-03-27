@@ -6,6 +6,7 @@ import datetime
 import os
 import db
 
+TARGET_FILES = "/var/data/*"
 t_delta = datetime.timedelta(hours=9)
 JST = datetime.timezone(t_delta, "JST")
 now = datetime.datetime.now(JST)
@@ -74,7 +75,7 @@ def auelect_main():
 
     logger.info("auelect start")
 
-    files = glob.glob("/data/*")
+    files = glob.glob(TARGET_FILES)
     for f in files:
         if os.path.basename(f)[0] == "_":  # prefix が _ のファイルは処理済と見なす
             continue
