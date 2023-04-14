@@ -28,7 +28,7 @@ def _extract_html(f):
         ret = []
         soup = BeautifulSoup(html, "html.parser")
 
-        table = soup.findAll("table")[0]
+        table = soup.findAll(class_="c-table--charge-detail")[0]
         rows = table.findAll("tr")
         for row in rows:
             ts = row.findAll("td")
@@ -42,7 +42,7 @@ def _extract_html(f):
                 consume_text.split(" ")[0],
                 price_text.split(" ")[-2],
             ]
-
+            print([day, float(consume), int(price)])
             # # ex. ['11', 8.50, 111]
             ret.append([day, float(consume), int(price)])
 
