@@ -30,6 +30,13 @@ def _connect_db():
         os.exit(1)
 
 
+def _make_yyyymmdd(day, yyyymm):
+    if int(day) >= 10:
+        return '"' + yyyymm + day + '"'
+    else:
+        return '"' + yyyymm + "0" + day + '"'
+
+
 def insert_auelect(data, yyyymm):
     cnx = _connect_db()
     cursor = cnx.cursor()
@@ -40,7 +47,9 @@ def insert_auelect(data, yyyymm):
     )
 
     for d in data:
-        sql = add_data.format('"' + yyyymm + d[0] + '"', int(float(d[1]) * 1000), 0, 0)
+        sql = add_data.format(
+            _make_yyyymmdd(d[0], yyyymm), int(float(d[1]) * 1000), 0, 0
+        )
         cursor.execute(sql)
 
     cnx.commit()
